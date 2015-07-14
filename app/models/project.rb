@@ -1,28 +1,23 @@
-class Project
+class Project < ActiveRecord::Base
 
-  attr_accessor :tasks, :due_date
+  has_many :tasks
 
-  def initialize()
-    @tasks = []
-    super
-  end
+  validates :name, presence: true
 
   def done?
-    @tasks.each do |task|
-     return false unless task.done?
-    end
+    tasks.to_a.reject(&:complete?).empty?
   end
 
   def total_size
-    tasks.sum(&:size)
+    tasks.to_a.sum(&:size)
   end
 
   def remaining_size
-    tasks.reject(&:complete?).sum(&:size)
+    tasks.to_a.reject(&:complete?).sum(&:size)
   end
 
   def completed_velocity
-    tasks.sum(&:points_toward_velocity)
+    tasks.to_a.sum(&:points_toward_velocity)
   end
 
   def current_rate
@@ -35,7 +30,7 @@ class Project
 
   def on_schedule?
     return false if projected_days_remaining.nan?
-    projected_days_remaining.days.from_now < @due_date
+    projected_days_remaining.days.from_now < due_date
   end
 
   def self.velocity_legth_in_days

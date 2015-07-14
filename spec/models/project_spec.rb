@@ -12,7 +12,7 @@ RSpec.describe Project do
 
     it "knows that a project with an incomplete task is not done" do
       project.tasks << task
-      expect(project.done?).to be_falsey
+      expect(project.done?).not_to be_truthy
     end
 
     it "marks a project done if its tasks are done" do
