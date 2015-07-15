@@ -1,6 +1,9 @@
 require 'rails_helper'
+require 'support/size_group'
 
 RSpec.describe Task do
+
+  it_should_behave_like "sizeable"
 
   it "can distinguish a completed task" do
     task = Task.new(size: 1)

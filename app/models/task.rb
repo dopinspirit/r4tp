@@ -22,4 +22,12 @@ class Task < ActiveRecord::Base
     complete? && completed_at > Project.velocity_legth_in_days.days.ago
   end
 
+  def epic?
+    size >= 5
+  end
+
+  def small?
+    size <= 1
+  end
+
 end
