@@ -3,6 +3,35 @@ require 'support/size_matcher'
 
 RSpec.describe Project do
 
+  describe "stubs and mocks" do
+
+    it "stubs an object" do
+      project = Project.new(name: "Project Grenlight")
+      allow(project).to receive(:name).and_return("Freud")
+      expect(project.name).to eq("Freud")
+    end
+
+    it "stubs the class" do
+      allow(Project).to receive(:find).and_return(Project.new(name: "Project Greenlight"))
+      project = Project.find(1)
+      expect(project.name).to eq("Project Greenlight")
+    end
+
+    it "expects stuff" do
+      mocky = double("Mock")
+      allow(mocky).to receive(:name).and_return("Paul")
+      allow(mocky).to receive(:weight).and_return(100)
+      expect(mocky.name).to eq("Paul")
+      expect(mocky.weight).to eq(100)
+    end
+
+    it "mocks an object" do
+      mock_project = Project.new(name: "Project Greenlight")
+      expect(mock_project).to receive(:name).and_return("Freud")
+      expect(mock_project.name).to eq("Freud")
+    end
+  end
+
   describe "initialization" do
     let(:project) {Project.new}
     let(:task) {Task.new}
