@@ -48,4 +48,9 @@ end
 group :test do
   gem 'capybara'
   gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'minitest-rails-capybara'
 end
+
+gem 'devise'
+
+gem "mocha", require: false,  group: [:development, :test]
