@@ -16,6 +16,14 @@ class ProjectsController < ApplicationController
 
   end
 
+  def show
+    @project = Project.find(params[:id])
+    unless current_user.can_view?(@project)
+      redirect_to new_user_session_path
+      return
+    end
+  end
+
   def index
     @projects = Project.all
   end
@@ -23,7 +31,7 @@ class ProjectsController < ApplicationController
   private
 
   def project_params
-    params.require(:project).permit(:name, :tasks)
+    params.require(:project).permit(:name, :tasks, :id)
   end
 
 end

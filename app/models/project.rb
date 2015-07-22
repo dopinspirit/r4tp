@@ -1,6 +1,8 @@
 class Project < ActiveRecord::Base
 
   has_many :tasks
+  has_many :roles
+  has_many :users, through: :roles
 
   validates :name, presence: true
 
@@ -35,6 +37,10 @@ class Project < ActiveRecord::Base
 
   def self.velocity_legth_in_days
     21
+  end
+
+  def self.all_public
+    where(public: true)
   end
 
 end
